@@ -1,0 +1,133 @@
+Metadata-Version: 2.4
+Name: ai-nabeel
+Version: 1.0.0
+Summary: AI Nabeel - Interactive Desktop Application
+Author-email: Your Name <your.email@example.com>
+License: MIT
+Project-URL: Homepage, https://github.com/yourusername/ai-nabeel
+Project-URL: Repository, https://github.com/yourusername/ai-nabeel.git
+Project-URL: Issues, https://github.com/yourusername/ai-nabeel/issues
+Keywords: eel,desktop,gui,python,javascript
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Programming Language :: Python :: 3.14
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.10.7
+Description-Content-Type: text/markdown
+Requires-Dist: eel==0.18.2
+Requires-Dist: bottle==0.13.4
+Requires-Dist: bottle-websocket==0.2.9
+Requires-Dist: gevent==26.4.0
+Requires-Dist: gevent-websocket==0.10.1
+Requires-Dist: future==1.0.0
+Provides-Extra: dev
+Requires-Dist: pytest>=7.0; extra == "dev"
+Requires-Dist: black>=22.0; extra == "dev"
+Requires-Dist: flake8>=4.0; extra == "dev"
+Provides-Extra: assistant
+Requires-Dist: SpeechRecognition>=3.14.3; extra == "assistant"
+Requires-Dist: pyttsx3>=2.99; extra == "assistant"
+Requires-Dist: pygame==2.6.1; python_version < "3.14" and extra == "assistant"
+
+# AI Nabeel
+
+An interactive desktop application built with Python and Eel, featuring a stunning black background with white constellation effects.
+
+## Requirements
+
+- **Python 3.10.7 or higher**
+- Windows/Mac/Linux
+
+## Installation
+
+### 1. Verify Python Version
+
+```bash
+python --version
+```
+
+Should show Python 3.10.7 or higher.
+
+### 2. Install Dependencies
+
+```bash
+python -m pip install -r requirements.txt
+```
+
+Or using the editable setup:
+
+```bash
+pip install -e .
+```
+
+### 3. Optional Assistant Extras
+
+Voice and audio features use optional packages such as `SpeechRecognition`,
+`pyttsx3`, and `pygame`. On Python 3.14, `pygame` may be unavailable, so the app
+will still start but skip the startup sound automatically.
+
+## Running the Application
+
+```bash
+python main.py
+```
+
+The application will start on `http://localhost:8000`
+
+## Project Structure
+
+```
+ai nabeel/
+├── main.py                 # Backend with Eel
+├── requirements.txt        # Project dependencies
+├── pyproject.toml         # Project configuration
+├── .python-version        # Python version specification
+├── frontend/
+│   ├── index.html         # Frontend HTML
+│   ├── style.css          # Styling with constellation background
+│   ├── main.js            # JavaScript with particle effects
+│   └── assets/            # Static assets
+└── README.md              # This file
+```
+
+## Features
+
+- **Beautiful UI**: Black background with white constellation effects
+- **Particle System**: 3D rotating particle sphere
+- **Python-JavaScript Bridge**: Use Eel for seamless communication
+- **Modern Design**: Responsive and visually appealing interface
+
+## Available Python Functions (Exposed to JavaScript)
+
+### `initialize_app()`
+Starts the UI flow and face-authentication handshake.
+
+### `takeAllCommands(message=None)`
+Processes either typed or voice commands.
+
+## Development
+
+### Calling Python from JavaScript
+
+```javascript
+eel.takeAllCommands("open youtube")();
+```
+
+### Calling JavaScript from Python
+
+```python
+eel.js_function_name(arg1, arg2)
+```
+
+## License
+
+MIT License
+
+## Support
+
+For issues and questions, please visit the GitHub repository.

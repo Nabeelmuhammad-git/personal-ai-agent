@@ -1,0 +1,638 @@
+:root {
+    --bg-void: #000000;
+    --typing-space-color: rgba(16, 8, 28, 0.75);
+    --purple-glow: #940088;
+    --purple-neon: #a855f7;
+    --purple-accent: #c084fc;
+    --purple-deep: #581c87;
+    --font-main: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --font-tech: 'Space Grotesk', monospace;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+/* Static nebula image background element */
+#bgImage {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: url('nebula_bg.png') no-repeat center center;
+    background-size: cover;
+    z-index: -2;
+    pointer-events: none;
+}
+
+body {
+    background-color: #000000;
+    color: #ffffff;
+    position: relative;
+    min-height: 100vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    font-family: var(--font-main);
+    margin: 0;
+    padding: 0;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 6px;
+}
+::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.3);
+}
+::-webkit-scrollbar-thumb {
+    background: rgba(168, 85, 247, 0.35);
+    border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(192, 132, 252, 0.65);
+}
+
+#starsCanvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Luxury Floating Glass Top Bar */
+.app-header {
+    position: relative;
+    z-index: 50;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    background: rgba(8, 2, 16, 0.55);
+    border-bottom: 1px solid rgba(168, 85, 247, 0.15);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
+}
+
+.brand-pill {
+    gap: 10px;
+    background: rgba(255, 255, 255, 0.04);
+    padding: 6px 14px;
+    border-radius: 999px;
+    border: 1px solid rgba(192, 132, 252, 0.2);
+}
+
+.core-pulse-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--purple-accent);
+    box-shadow: 0 0 10px var(--purple-accent);
+    animation: livePulse 2s infinite ease-in-out;
+}
+
+.brand-name {
+    font-family: var(--font-tech);
+    font-weight: 700;
+    font-size: 0.88rem;
+    letter-spacing: 2px;
+    background: linear-gradient(135deg, #ffffff 40%, #c084fc 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.badge-core {
+    font-family: var(--font-tech);
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    background: rgba(147, 51, 234, 0.25);
+    border: 1px solid rgba(192, 132, 252, 0.4);
+    color: #e9d5ff;
+    padding: 2px 7px;
+    border-radius: 999px;
+}
+
+.status-indicator {
+    gap: 8px;
+    font-family: var(--font-tech);
+    font-size: 0.72rem;
+    letter-spacing: 1px;
+    color: rgba(255, 255, 255, 0.7);
+    padding: 6px 12px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.status-live-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #10b981;
+    box-shadow: 0 0 8px #10b981;
+    animation: livePulse 2.5s infinite;
+}
+
+.main-content {
+    position: relative;
+    z-index: 10;
+}
+
+/* Ambient Stage & Core */
+.orb-stage {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.ambient-glow {
+    position: absolute;
+    width: 440px;
+    height: 440px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(147, 51, 234, 0.35) 0%, rgba(192, 132, 252, 0.12) 45%, transparent 70%);
+    filter: blur(35px);
+    pointer-events: none;
+    z-index: 0;
+    animation: ambientBreathe 6s ease-in-out infinite alternate;
+}
+
+/* Sci-Fi Gyro Rings */
+.gyro-ring {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.gyro-outer {
+    width: 426px;
+    height: 426px;
+    border: 1px dashed rgba(192, 132, 252, 0.28);
+    box-shadow: 0 0 25px rgba(168, 85, 247, 0.15);
+    z-index: 1;
+    animation: gyroRotate 28s linear infinite;
+}
+
+.gyro-inner {
+    width: 406px;
+    height: 406px;
+    border: 1px solid rgba(168, 85, 247, 0.14);
+    border-top: 1px solid rgba(233, 213, 255, 0.5);
+    border-bottom: 1px solid rgba(233, 213, 255, 0.5);
+    z-index: 1;
+    animation: gyroReverse 20s linear infinite;
+}
+
+#canvasOne {
+    width: 380px;
+    height: 380px;
+    border-radius: 50%;
+    clip-path: circle(50% at center);
+    z-index: 5;
+    pointer-events: none;
+    position: absolute;
+    box-shadow: inset 0 0 55px rgba(0, 0, 0, 0.95);
+}
+
+#JarvisHood {
+    width: 380px;
+    height: 380px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+    position: relative;
+}
+
+.square {
+    width: 380px;
+    height: 380px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;   
+}
+
+.square span:nth-child(1) {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(#000000 52%, #850094);
+    box-shadow: 0 0 55px rgba(148, 0, 136, 0.6), inset 0 0 40px rgba(148, 0, 136, 0.35);
+    border-radius: 30% 60% 63% 37% / 40% 45% 58% 60%; 
+    transition: 0.4s;
+    cursor: pointer;
+    animation: animation1 6s linear infinite;
+}
+
+.square span:nth-child(2) {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(#000000 52%, #700080);
+    box-shadow: 0 0 55px rgba(120, 0, 145, 0.55), inset 0 0 40px rgba(120, 0, 145, 0.35);
+    border-radius: 30% 60% 63% 37% / 40% 45% 58% 60%; 
+    transition: 0.4s;
+    cursor: pointer;
+    animation: animation2 4s linear infinite;
+}
+
+.square span:nth-child(3) {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(#000000 54%, #940088);
+    box-shadow: 0 0 50px rgba(148, 0, 136, 0.5), inset 0 0 40px rgba(148, 0, 136, 0.3);
+    border-radius: 30% 60% 63% 37% / 40% 45% 58% 60%; 
+    transition: 0.4s;
+    cursor: pointer;
+    animation: animation3 8s linear infinite;
+}
+
+.square span:nth-child(4) {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(#000000 62%, #850094);
+    box-shadow: 0 0 65px rgba(148, 0, 136, 0.5), inset 0 0 45px rgba(0, 0, 0, 0.98);
+    border-radius: 50%; 
+    transition: 0.4s;
+    cursor: pointer;
+    animation: animation4 8s linear infinite;
+}
+
+/* Luxury Holographic Typography */
+.hood-text {
+    font-size: 1.55rem;
+    font-weight: 600;
+    letter-spacing: 0.8px;
+    margin-top: 26px;
+    margin-bottom: 8px;
+    background: linear-gradient(135deg, #ffffff 40%, #e9d5ff 75%, #c084fc 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 2px 14px rgba(192, 132, 252, 0.3));
+}
+
+.system-badge-container {
+    margin-bottom: 20px;
+}
+
+.system-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 14px;
+    border-radius: 999px;
+    background: rgba(147, 51, 234, 0.12);
+    border: 1px solid rgba(192, 132, 252, 0.25);
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.78rem;
+    letter-spacing: 0.5px;
+    box-shadow: 0 0 16px rgba(147, 51, 234, 0.15);
+}
+
+.text-purple {
+    color: var(--purple-accent);
+}
+
+/* Animations */
+@keyframes livePulse {
+    0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.4;
+        transform: scale(0.85);
+    }
+}
+
+@keyframes ambientBreathe {
+    0% {
+        opacity: 0.7;
+        transform: scale(0.96);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1.04);
+    }
+}
+
+@keyframes gyroRotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes gyroReverse {
+    from {
+        transform: rotate(360deg);
+    }
+    to {
+        transform: rotate(0deg);
+    }
+}
+
+@keyframes animation1 {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes animation2 {
+    0% {
+        transform: rotate(90deg);
+    }
+    100% {
+        transform: rotate(270deg);
+    }
+} 
+
+@keyframes animation3 {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes animation4 {
+    0% {
+        transform: scale(0.8) rotate(0deg);
+    }
+    50% {
+        transform: scale(1.1) rotate(180deg);
+    }
+    100% {
+        transform: scale(0.8) rotate(360deg);
+    }
+}
+
+/* Luxury Floating Glassmorphic Dock */
+.dock-container {
+    background: rgba(16, 8, 28, 0.72);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    border: 1px solid rgba(192, 132, 252, 0.32);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 25px rgba(147, 51, 234, 0.22), inset 0 1px 1px rgba(255, 255, 255, 0.12);
+    border-radius: 9999px;
+    padding: 8px 10px 8px 20px;
+    max-width: 660px;
+    margin: 0 auto;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.dock-container:focus-within {
+    border-color: rgba(192, 132, 252, 0.65);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.85), 0 0 35px rgba(168, 85, 247, 0.38), inset 0 1px 1px rgba(255, 255, 255, 0.2);
+    transform: translateY(-1px);
+}
+
+.dock-icon {
+    font-size: 1.15rem;
+    color: var(--purple-accent);
+    margin-right: 12px;
+    filter: drop-shadow(0 0 8px rgba(192, 132, 252, 0.5));
+}
+
+.input-field {
+    background-color: transparent;
+    border: none;
+    width: 100%;
+    outline: none;
+    color: #ffffff;
+    font-family: var(--font-main);
+    font-size: 0.98rem;
+    font-weight: 400;
+}
+
+.input-field::placeholder {
+    color: rgba(255, 255, 255, 0.45);
+    font-weight: 300;
+}
+
+/* Premium Action Buttons */
+.glow-on-hover {
+    width: 38px;
+    height: 38px;
+    border: none;
+    outline: none;
+    color: #ffffff;
+    cursor: pointer;
+    position: relative;
+    border-radius: 50%;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 8px;
+    transition: all 0.25s ease;
+    font-size: 0.95rem;
+}
+
+.btn-mic {
+    background: linear-gradient(135deg, #7e22ce 0%, #a855f7 100%);
+    box-shadow: 0 0 18px rgba(168, 85, 247, 0.45);
+}
+
+.btn-mic:hover {
+    transform: scale(1.08);
+    box-shadow: 0 0 25px rgba(192, 132, 252, 0.7);
+}
+
+.btn-send {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.btn-send:hover {
+    background: rgba(168, 85, 247, 0.3);
+    border-color: rgba(192, 132, 252, 0.5);
+    transform: scale(1.08);
+    color: #ffffff;
+    box-shadow: 0 0 15px rgba(168, 85, 247, 0.35);
+}
+
+.btn-reset {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.btn-reset:hover {
+    background: rgba(255, 255, 255, 0.12);
+    transform: scale(1.08);
+    color: #ffffff;
+}
+
+.glow-on-hover:active {
+    transform: scale(0.92);
+}
+
+/* Glassmorphic Conversation Canvas */
+.chat-canvas {
+    background: rgba(14, 6, 24, 0.75);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(192, 132, 252, 0.28);
+    min-height: 120px;
+    max-height: 280px;
+    max-width: 680px;
+    overflow-y: auto;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6), 0 0 25px rgba(147, 51, 234, 0.18);
+    border-radius: 16px;
+    margin: 0 auto 20px;
+    padding: 16px;
+}
+
+#response:empty {
+    display: none;
+}
+
+/* Message Cards */
+.receiver_message {
+    padding: 12px 18px;
+    border: 1px solid rgba(192, 132, 252, 0.25);
+    border-left: 3px solid var(--purple-accent);
+    border-radius: 4px 16px 16px 16px;
+    color: #f3e8ff;
+    background: rgba(22, 10, 38, 0.82);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4), 0 0 15px rgba(147, 51, 234, 0.15);
+    line-height: 1.5;
+    font-size: 0.95rem;
+}
+
+.sender_message {
+    padding: 12px 18px;
+    border: 1px solid rgba(192, 132, 252, 0.35);
+    border-radius: 16px 16px 4px 16px;
+    color: #ffffff;
+    background: linear-gradient(135deg, #6b21a8 0%, #9333ea 100%);
+    box-shadow: 0 4px 20px rgba(147, 51, 234, 0.35);
+    line-height: 1.5;
+    font-size: 0.95rem;
+}
+
+.width-size {
+    max-width: 82%;
+    width: auto;
+}
+
+/* Agent Status Pill */
+.agent-status {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    width: fit-content;
+    padding: 8px 18px;
+    border-radius: 999px;
+    color: #e9d5ff;
+    font-size: 0.85rem;
+    font-weight: 500;
+    background: rgba(20, 8, 34, 0.88);
+    border: 1px solid rgba(192, 132, 252, 0.4);
+    box-shadow: 0 0 25px rgba(147, 51, 234, 0.3);
+}
+
+.agent-spinner {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-top-color: #ffffff;
+    border-right-color: var(--purple-accent);
+    box-shadow: 0 0 10px var(--purple-accent);
+    animation: agent-spin 0.85s linear infinite;
+}
+
+@keyframes agent-spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* SiriWave / Listening Section */
+.listening-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-tech);
+    font-size: 0.8rem;
+    letter-spacing: 1.5px;
+    color: var(--purple-accent);
+    padding: 6px 16px;
+    border-radius: 999px;
+    background: rgba(147, 51, 234, 0.15);
+    border: 1px solid rgba(192, 132, 252, 0.35);
+    box-shadow: 0 0 20px rgba(147, 51, 234, 0.25);
+}
+
+.listening-pulse {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #ef4444;
+    box-shadow: 0 0 10px #ef4444;
+    animation: livePulse 1.2s infinite;
+}
+
+#siri-container {
+    width: 640px;
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+.siri-message {
+    font-size: 1.35rem;
+    font-weight: 500;
+    text-shadow: 0 0 14px rgba(255, 255, 255, 0.4);
+}
+
+.status-card {
+    display: inline-block;
+    padding: 14px 22px;
+    border-radius: 16px;
+    background: rgba(147, 51, 234, 0.15);
+    border: 1px solid rgba(192, 132, 252, 0.35);
+    box-shadow: 0 0 25px rgba(147, 51, 234, 0.25);
+}
+
+@media (max-width: 768px) {
+    #canvasOne,
+    #JarvisHood,
+    .square,
+    .gyro-outer,
+    .gyro-inner,
+    .ambient-glow {
+        width: min(85vw, 320px);
+        height: min(85vw, 320px);
+    }
+
+    .dock-container {
+        padding: 8px 8px 8px 16px;
+        margin: 0 10px;
+    }
+
+    .brand-pill {
+        padding: 4px 10px;
+    }
+}

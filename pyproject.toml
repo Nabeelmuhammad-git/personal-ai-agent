@@ -1,0 +1,64 @@
+[build-system]
+requires = ["setuptools>=45", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ai-nabeel"
+version = "1.0.0"
+description = "AI Nabeel - Interactive Desktop Application"
+readme = "README.md"
+requires-python = ">=3.10.7"
+license = {text = "MIT"}
+authors = [
+    {name = "Your Name", email = "your.email@example.com"}
+]
+keywords = ["eel", "desktop", "gui", "python", "javascript"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.14",
+    "Operating System :: OS Independent",
+]
+
+dependencies = [
+    "eel==0.18.2",
+    "bottle==0.13.4",
+    "bottle-websocket==0.2.9",
+    "gevent==26.4.0",
+    "gevent-websocket==0.10.1",
+    "future==1.0.0",
+    "opencv-python-headless==5.0.0.93",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "black>=22.0",
+    "flake8>=4.0",
+]
+assistant = [
+    "SpeechRecognition>=3.14.3",
+    "pyttsx3>=2.99",
+    "pygame==2.6.1; python_version < '3.14'",
+]
+
+[project.urls]
+Homepage = "https://github.com/yourusername/ai-nabeel"
+Repository = "https://github.com/yourusername/ai-nabeel.git"
+Issues = "https://github.com/yourusername/ai-nabeel/issues"
+
+[tool.setuptools.packages.find]
+include = ["backend", "backend.*"]
+
+[tool.black]
+line-length = 88
+target-version = ['py310', 'py311', 'py312', 'py313', 'py314']
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]

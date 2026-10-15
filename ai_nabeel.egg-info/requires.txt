@@ -1,0 +1,18 @@
+eel==0.18.2
+bottle==0.13.4
+bottle-websocket==0.2.9
+gevent==26.4.0
+gevent-websocket==0.10.1
+future==1.0.0
+
+[assistant]
+SpeechRecognition>=3.14.3
+pyttsx3>=2.99
+
+[assistant:python_version < "3.14"]
+pygame==2.6.1
+
+[dev]
+pytest>=7.0
+black>=22.0
+flake8>=4.0

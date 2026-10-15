@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Nabeel — Neural Core</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"
+    />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"
+      type="text/javascript"
+    ></script>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div id="bgImage"></div>
+    <div class="bg-overlay"></div>
+    <canvas id="starsCanvas"></canvas>
+
+    <!-- Premium Floating Glass Top Bar -->
+    <header class="app-header d-flex justify-content-between align-items-center px-4 py-3">
+      <div class="brand-pill d-flex align-items-center">
+        <span class="core-pulse-dot"></span>
+        <span class="brand-name">AI NABEEL</span>
+        <span class="badge-core">CORE v2.5</span>
+      </div>
+      <div class="status-indicator d-flex align-items-center">
+        <span class="status-live-dot"></span>
+        <span class="status-text">NEURAL ENGINE ACTIVE</span>
+      </div>
+    </header>
+
+    <div class="container py-2 main-content">
+      <section id="Start">
+        <div class="row">
+          <div class="col-lg-12">
+            <div
+              class="d-flex justify-content-center align-items-center"
+              style="min-height: 70vh"
+            >
+              <div class="text-center">
+                <div id="Loader" class="mb-4">
+                  <div class="square mx-auto">
+                    <span class="circle"></span>
+                    <span class="circle"></span>
+                    <span class="circle"></span>
+                    <span class="circle front"></span>
+                  </div>
+                </div>
+
+                <div id="FaceAuth" class="status-card mb-4 text-light" hidden>
+                  Ready for face authentication...
+                </div>
+
+                <div
+                  id="FaceAuthSuccess"
+                  class="status-card mb-4 text-light"
+                  hidden
+                >
+                  Face recognized successfully.
+                </div>
+
+                <div id="HelloGreet" class="status-card mb-4 text-light" hidden>
+                  Welcome to your assistant.
+                </div>
+              </div>
+            </div>
+
+            <div class="d-flex justify-content-center align-items-center">
+              <h1
+                id="WishMessage"
+                class="text-center text-light text mt-4 siri-message"
+              >
+                Initializing...
+              </h1>
+            </div>
+
+            <div id="BackupPassword" class="mt-4 text-center" hidden>
+              <div class="status-card text-light mx-auto" style="max-width: 420px;">
+                <p class="mb-3">Face not recognized. Use backup password to continue.</p>
+                <input
+                  id="backupPasswordInput"
+                  type="password"
+                  class="form-control mb-3"
+                  placeholder="Enter backup password"
+                  autocomplete="off"
+                />
+                <button id="BackupPasswordBtn" class="btn btn-light w-100" type="button">
+                  Unlock Assistant
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="Oval" class="mb-4" hidden>
+        <div class="row">
+          <div class="col-md-1"></div>
+          <div class="col-md-10">
+            <div
+              class="d-flex justify-content-center align-items-center position-relative orb-stage"
+              style="min-height: 52vh"
+            >
+              <div class="ambient-glow"></div>
+              <div class="gyro-ring gyro-outer"></div>
+              <div class="gyro-ring gyro-inner"></div>
+
+              <canvas
+                id="canvasOne"
+                width="700"
+                height="420"
+                style="position: absolute"
+              ></canvas>
+              <div id="JarvisHood">
+                <div class="square">
+                  <span class="circle"></span>
+                  <span class="circle"></span>
+                  <span class="circle"></span>
+                  <span class="circle front"></span>
+                </div>
+              </div>
+            </div>
+
+            <h4 class="hood-text text-center">sir "Nabeel" ask me anything</h4>
+            <div class="system-badge-container text-center mb-3">
+              <span class="system-badge">
+                <i class="bi bi-cpu-fill me-1 text-purple"></i> AI Voice & Neural Chat Active
+              </span>
+            </div>
+
+            <div
+              id="AgentStatus"
+              class="agent-status mx-auto mb-3"
+              aria-live="polite"
+              hidden
+            >
+              <span class="agent-spinner" aria-hidden="true"></span>
+              <span id="AgentStatusText">AI Nabeel is thinking...</span>
+            </div>
+
+            <div
+              id="response"
+              class="chat-canvas rounded p-3 mb-4 mx-auto"
+              aria-live="polite"
+            ></div>
+
+            <div class="col-md-12 mt-3 pt-1">
+              <div class="text-center">
+                <div id="TextInput" class="dock-container d-flex align-items-center">
+                  <i class="bi bi-stars dock-icon"></i>
+                  <input
+                    type="text"
+                    id="chatbox"
+                    name="chatbox"
+                    placeholder="Ask me anything, Sir Nabeel..."
+                    class="input-field"
+                    autocomplete="off"
+                  />
+                  <div class="d-flex align-items-center">
+                    <button
+                      id="MicBtn"
+                      class="glow-on-hover btn-mic"
+                      type="button"
+                      title="Voice Command"
+                    >
+                      <i class="bi bi-mic-fill"></i>
+                    </button>
+                    <button
+                      id="ChatBtn"
+                      class="glow-on-hover btn-send"
+                      type="button"
+                      title="Send Message"
+                    >
+                      <i class="bi bi-send-fill"></i>
+                    </button>
+                    <button
+                      id="SettingBtn"
+                      class="glow-on-hover btn-reset"
+                      type="button"
+                      title="Clear Chat"
+                    >
+                      <i class="bi bi-arrow-clockwise"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-1"></div>
+        </div>
+      </section>
+
+      <section id="SiriWave" class="mb-4" hidden>
+        <div class="row">
+          <div class="col-md-12">
+            <div
+              class="d-flex justify-content-center align-items-center flex-column"
+              style="min-height: 52vh"
+            >
+              <div class="listening-badge mb-3">
+                <span class="listening-pulse"></span>
+                <span>LISTENING TO SIR NABEEL</span>
+              </div>
+              <div class="text-center">
+                <p id="SiriMessage" class="text-light mb-4 siri-message">
+                  Listening...
+                </p>
+                <div id="siri-container"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://unpkg.com/siriwave/dist/siriwave.umd.min.js"></script>
+    <script src="main.js"></script>
+    <script type="text/javascript" src="/eel.js"></script>
+    <script src="controller.js"></script>
+  </body>
+</html>

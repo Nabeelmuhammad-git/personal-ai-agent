@@ -1,0 +1,12 @@
+# Core app dependencies
+eel==0.18.2
+bottle==0.13.4
+bottle-websocket==0.2.9
+gevent==26.4.0
+gevent-websocket==0.10.1
+future==1.0.0
+opencv-python-headless==5.0.0.93
+
+# Optional assistant features
+# pygame is intentionally omitted on Python 3.14 because wheels are not available
+# in this environment. The app now starts cleanly without audio playback support.
