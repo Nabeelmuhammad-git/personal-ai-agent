@@ -1,5 +1,6 @@
 # AI Nabeel
 
+<img width="1280" height="563" alt="Image" src="https://github.com/user-attachments/assets/0bffe15a-fdf8-4ab0-a6bf-428b46689621" />
 An interactive desktop application built with Python and Eel, featuring a stunning black background with white constellation effects.
 
 ## Requirements
